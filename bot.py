@@ -237,6 +237,43 @@ async def code_text(client, message):
     if files:
         await send_files(message, code)
 
+@app.on_message(filters.command("broadcast") & filters.user(ADMIN_ID))
+async def broadcast(client, message):
+
+    if len(message.command) < 2:
+        await message.reply_text("Gunakan:\n/broadcast pesan")
+        return
+
+    text = message.text.split(None,1)[1]
+
+    users = get_users()
+
+    total = 0
+    success = 0
+    failed = 0
+
+    msg = await message.reply_text("🚀 Memulai broadcast...")
+
+    for user in users:
+
+        total += 1
+
+        try:
+            await client.send_message(user[0], text)
+            success += 1
+
+        except:
+            failed += 1
+
+        await asyncio.sleep(0.05)
+
+    await msg.edit_text(
+        f"✅ Broadcast selesai\n\n"
+        f"👥 Total User : {total}\n"
+        f"📤 Berhasil : {success}\n"
+        f"❌ Gagal : {failed}"
+                           )
+    
 
 print("Bot Running...")
 app.run()
