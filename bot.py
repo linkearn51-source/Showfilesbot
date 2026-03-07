@@ -3,6 +3,7 @@ import string
 import asyncio
 
 from pyrogram import Client, filters
+from config import ADMIN_ID
 from pyrogram.errors import UserNotParticipant, FloodWait
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
