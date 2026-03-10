@@ -1,19 +1,9 @@
-import sqlite3
+from pymongo import MongoClient
+from config import MONGO_URI
 
-conn = sqlite3.connect("bot.db", check_same_thread=False)
-cursor = conn.cursor()
+client = MongoClient(MONGO_URI)
+db = client["filestore"]
 
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS videos(
-code TEXT,
-file_id TEXT
-)
-""")
-
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS users(
-user_id INTEGER PRIMARY KEY
-)
-""")
-
-conn.commit()
+files = db["files"]
+links = db["links"]
+users = db["users"]
